@@ -1,5 +1,15 @@
-// @ts-check
-import { defineConfig } from 'astro/config';
+// astro.config.mjs
+import { defineConfig } from 'astro/config'
 
-// https://astro.build/config
-export default defineConfig({});
+export default defineConfig({
+  vite: {
+    server: {
+      allowedHosts: [
+        'formygf.ariestwn.com', // Your domain
+        'localhost' // Keep localhost for development
+      ],
+      host: true, // Allow external access
+      port: 4321 // Keep your existing port
+    }
+  }
+})
