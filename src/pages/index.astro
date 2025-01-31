@@ -9,8 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Will You Be My Valentine? 💝</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    <audio id="confettiSound" src="/src/assets/confetti.wav" preload="auto"></audio>
-    <audio id="musicboxSound" src="/src/assets/musicbox.wav" preload="auto"></audio>
+    <audio id="confettiSound" src="/confetti.wav" preload="auto"></audio>
+    <audio id="musicboxSound" src="/musicbox.wav" preload="auto"></audio>
     <style>
         /* Loading Screen Styles */
         .loading-screen {
@@ -243,7 +243,7 @@
         <h1>Hi Tio 👋</h1>
         <h2>Will you be my Valentine? 💖</h2>
         <div id="loveContent" style="display: none;">
-            <img src="/src/assets/us.png" alt="mylove" class="mylove-img" />
+            <img src="/us.png" alt="mylove" class="mylove-img" />
         </div>
         <div class="hearts">
             <!-- Existing hearts -->
@@ -397,7 +397,7 @@
             // Create an array of promises for all assets
             const imagePromise = new Promise<void>((resolve) => {
                 const img = new Image();
-                img.src = '/src/assets/us.png';
+                img.src = '/us.png';
                 img.onload = resolve;
             });
 
@@ -410,7 +410,11 @@
                     if ((audio as HTMLAudioElement).readyState >= 4) {
                         resolve();
                     } else {
-                        audio.addEventListener('canplaythrough', () => resolve());
+                        const handler = (_ev: Event) => {
+                        resolve();
+                        audio.removeEventListener('canplaythrough', handler);
+                    };
+                    audio.addEventListener('canplaythrough', handler);
                     }
                 });
             });
